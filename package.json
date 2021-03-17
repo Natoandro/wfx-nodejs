@@ -1,0 +1,38 @@
+{
+  "name": "wfx-nodejs",
+  "version": "1.0.0",
+  "description": "File explorer over HTTP",
+  "main": "build/server/index.js",
+  "scripts": {
+    "start": "node build/server/index.js",
+    "build": "npx gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Natoandro/wfx-nodejs.git"
+  },
+  "keywords": [
+    "file",
+    "explorer",
+    "file-explorer",
+    "remote"
+  ],
+  "author": "Natoandro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Natoandro/wfx-nodejs/issues"
+  },
+  "homepage": "https://github.com/Natoandro/wfx-nodejs#readme",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.2.0",
+    "@types/mime-types": "^2.1.0",
+    "@types/node": "^14.14.35",
+    "gulp": "^4.0.2",
+    "rollup": "^2.41.4",
+    "tslib": "^2.1.0",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "mime-types": "^2.1.29"
+  }
+}
