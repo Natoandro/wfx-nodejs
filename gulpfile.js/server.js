@@ -10,7 +10,7 @@ const inputOptions = {
       moduleResolution: 'node',
     }),
   ],
-  external: ['http', 'fs', 'path', 'url', 'mime-types'],
+  external: ['http', 'fs', 'path', 'url', 'util', 'mime-types', '@hapi/accept'],
 };
 
 const outputOptions = {

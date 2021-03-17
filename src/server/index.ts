@@ -1,8 +1,12 @@
 import http from 'http';
+import { mediaType } from '@hapi/accept';
 import env from './env';
-import { sendClientFile } from './response';
+import { sendClientFile, sendJson } from './response';
+import Explorer from './explorer';
 
-function requestHandler(
+const explorer = new Explorer(process.argv[2]);
+
+async function requestHandler(
   request: http.IncomingMessage,
   response: http.ServerResponse
 ) {
@@ -12,7 +16,23 @@ function requestHandler(
   const requestedFile = params.get('file');
 
   if (requestedFile == null) {
-    sendClientFile(response, 'index.html');
+    const type = mediaType(request.headers['accept'], [
+      'text/html',
+      'application/json',
+    ]);
+    const headers = { 'Vary': 'accept' };
+    switch (type) {
+      case 'text/html':
+        sendClientFile(response, 'index.html', headers);
+        return;
+      case 'application/json':
+        const object = await explorer.getDirectoryContent(url.pathname)
+        sendJson(response, object, headers);
+        return;
+      default:
+        response.writeHead(406, headers);
+        response.end();
+    }
   }
   else {
     sendClientFile(response, requestedFile);
