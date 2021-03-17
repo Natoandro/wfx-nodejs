@@ -1,3 +1,4 @@
+const { watch } = require('gulp');
 const rollup = require('rollup');
 const typescript = require('@rollup/plugin-typescript');
 
@@ -24,4 +25,16 @@ async function server() {
   await bundle.close();
 }
 
-module.exports = { server };
+
+function server_rebuild() {
+  const watcher = getServerWatcher();
+  watcher.on('all', server);
+}
+
+
+function getServerWatcher() {
+  return watch('src/server/*.ts');
+}
+
+
+module.exports = { server, server_rebuild, getServerWatcher };
