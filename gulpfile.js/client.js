@@ -5,9 +5,16 @@ const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const replace = require('@rollup/plugin-replace');
 
+const staticFiles = ['src/client/statics/**/*'];
+const scriptFiles = [
+  'src/client/**/*.ts',
+  'src/client/**/*.tsx',
+  'src/common/**/*.ts'
+];
+
 function statics() {
   return src([
-    'src/client/statics/*',
+    ...staticFiles,
     'node_modules/react/umd/react.development.js',
     'node_modules/react-dom/umd/react-dom.development.js'
   ]).pipe(dest('build/client'));
@@ -48,12 +55,8 @@ async function client_bundle() {
 const client = parallel(statics, client_bundle);
 
 function client_rebuild() {
-  const watcher = getClientWatcher();
-  watcher.on('all', client);
+  watch(staticFiles, statics);
+  watch(scriptFiles, client_bundle);
 }
 
-function getClientWatcher() {
-  return watch('src/client/**/*');
-}
-
-module.exports = { client, client_rebuild, getClientWatcher };
+module.exports = { client, client_rebuild };

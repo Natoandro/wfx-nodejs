@@ -1,6 +1,9 @@
-const { watch } = require('gulp');
+const { watch, series } = require('gulp');
 const rollup = require('rollup');
 const typescript = require('@rollup/plugin-typescript');
+const { restart_server } = require('./server-process');
+
+const serverFiles = ['src/server/*.ts', 'src/common/*.ts'];
 
 async function server() {
   const bundle = await rollup.rollup({
@@ -26,14 +29,12 @@ async function server() {
 
 
 function server_rebuild() {
-  const watcher = getServerWatcher();
-  watcher.on('all', server);
+  watch(serverFiles, server);
+}
+
+function server_dev() {
+  watch(serverFiles, series(server, restart_server));
 }
 
 
-function getServerWatcher() {
-  return watch('src/server/*.ts');
-}
-
-
-module.exports = { server, server_rebuild, getServerWatcher };
+module.exports = { server, server_rebuild, server_dev };

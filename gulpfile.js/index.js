@@ -1,14 +1,9 @@
 const { parallel, series } = require('gulp');
-const { server, server_rebuild, getServerWatcher } = require('./server');
+const { server, server_rebuild, server_dev } = require('./server');
 const { client, client_rebuild } = require('./client');
-const { restart_server, start_server } = require('./server-process');
+const { start_server } = require('./server-process');
 
 const all = parallel(server, client);
-
-function server_dev() {
-  const watcher = getServerWatcher();
-  watcher.on('all', series(server, restart_server));
-}
 
 const dev = parallel(
   series(parallel(client, server), start_server), 
