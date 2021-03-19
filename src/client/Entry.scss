@@ -1,0 +1,52 @@
+
+.Entry {
+  display: flex;
+  border-bottom: 1px solid $primaryLight;
+  padding: 0 0.5rem;
+  cursor: default;
+
+  &:hover {
+    background-color: $primaryLight;
+  }
+
+  .Entry-icon {
+    width: 24px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .Entry-name {
+    width: 240px;
+  }
+  .Entry-modified {
+    width: 120px;
+  }
+  .Entry-size {
+    width: 60px;
+  }
+
+  .Entry-text-field {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 0.2rem;
+    border-right: 1px solid transparent;
+    padding: 0.2rem 0.5rem;
+  }
+
+  /* TEMP */
+  .DirIcon {
+    color: $textDisabled;
+  }
+}
+
+.HeaderEntry {
+  background-color: $primary !important;
+  border-bottom-color: darken($primary, 10%);
+
+  .Entry-text-field {
+    font-weight: bold;
+    border-right-color: darken($primary, 10%);
+  }
+}
+

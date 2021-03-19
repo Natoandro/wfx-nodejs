@@ -4,12 +4,14 @@ const typescript = require('@rollup/plugin-typescript');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const replace = require('@rollup/plugin-replace');
+const scss = require('rollup-plugin-scss');
 
 const staticFiles = ['src/client/statics/**/*'];
 const scriptFiles = [
   'src/client/**/*.ts',
   'src/client/**/*.tsx',
-  'src/common/**/*.ts'
+  'src/common/**/*.ts',
+  'src/client/**/*.css', 'src/client/**/*.scss' // not script files !
 ];
 
 function statics() {
@@ -27,14 +29,18 @@ async function client_bundle() {
       typescript({
         tsconfig: 'client.tsconfig.json'
       }),
-      // We are currently using only 'react' and 'react-dom' from node_module
-      //nodeResolve(),
-      //commonjs(),
+      nodeResolve({
+        skip: ['react', 'react-dom']
+      }),
+      commonjs(),
       replace({
         preventAssignment: true,
         values: {
           'process.env.NODE_ENV': JSON.stringify('development')
         }
+      }),
+      scss({
+        output: 'build/client/style.css'
       })
     ],
     external: ['react', 'react-dom']

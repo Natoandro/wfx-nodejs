@@ -1,0 +1,28 @@
+$primary: hsl(200, 50%, 70%);
+$primaryLight: lighten($primary, 20%);
+$primaryDark: darken($primary, 40%);
+
+$textColor: #444;
+$textDisabled: #aaa;
+
+body {
+  background-color: mix($primaryLight, white, 10%);
+  font-family: 'Noto Sans', Helvetica, Arial, sans-serif;
+  margin: 0;
+  color: $textColor;
+}
+
+#WfxApp {
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    color: $primaryDark;
+    margin: 0;
+  }
+
+  .Entries {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,29 +1,9 @@
 import React from 'react';
-import { DirectoryEntries, DirectoryEntry } from '../common/types';
+import { DirectoryEntries } from '../common/types';
 
-namespace Entry {
-  interface DirProps {
-    data: DirectoryEntry.Directory;
-  }
+import './WfxApp.scss';
 
-  export function Dir({ data }: DirProps) {
-    const path = `${window.location}${data.name}/`;
-    return (
-      <li>
-        <a href={ path }>(dir) { data.name }</a>
-      </li>
-    );
-  }
-
-  interface FileProps {
-    data: DirectoryEntry.File;
-  }
-  export function File({ data }: FileProps) {
-    return (
-      <li>{ data.name }</li>
-    );
-  }
-}
+import Entry from './Entry';
 
 async function getEntries(path) {
   const response = await window.fetch(path, {
@@ -36,10 +16,12 @@ interface EntriesProps {
 }
 function Entries({ entries }: EntriesProps) {
   return (
-    <ul>
-      { entries.dirs.map(data => <Entry.Dir key={data.name} data={ data } />) }
-      { entries.files.map(data => <Entry.File key={data.name} data={ data } />) }
-    </ul>
+    <div className="Entries">
+      <Entry.Header />
+      {window.location.pathname === '/' || <Entry.Dir name=".." mtime={null} />}
+      {entries.dirs.map(data => <Entry.Dir key={data.name} {...data} />)}
+      {entries.files.map(data => <Entry.File key={data.name} {...data} />)}
+    </div>
   );
 }
 
