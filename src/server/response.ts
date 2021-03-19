@@ -20,12 +20,13 @@ function sendText(
   text: string = '',
   headers: http.OutgoingHttpHeaders = {}
 ) {
+  const buffer = Buffer.from(text);
   setHeaders(response, 
-    { 'Content-Type': 'text/plain', 'Content-Length': text.length },
+    { 'Content-Type': 'text/plain', 'Content-Length': buffer.length },
     headers
   );
   response.writeHead(status);
-  response.end(text);
+  response.end(buffer);
 }
 
 export async function sendClientFile(
