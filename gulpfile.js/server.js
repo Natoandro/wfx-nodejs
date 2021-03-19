@@ -2,26 +2,25 @@ const { watch } = require('gulp');
 const rollup = require('rollup');
 const typescript = require('@rollup/plugin-typescript');
 
-const inputOptions = {
-  input: 'src/server/index.ts',
-  plugins: [
-    typescript({
-      target: 'es2017',
-      allowSyntheticDefaultImports: true,
-      moduleResolution: 'node',
-    }),
-  ],
-  external: ['http', 'fs', 'path', 'url', 'util', 'mime-types', '@hapi/accept'],
-};
-
-const outputOptions = {
-  dir: 'build/server',
-  format: 'cjs',
-};
-
 async function server() {
-  const bundle = await rollup.rollup(inputOptions);
-  await bundle.write(outputOptions);
+  const bundle = await rollup.rollup({
+    input: 'src/server/index.ts',
+    plugins: [
+      typescript({
+        tsconfig: 'server.tsconfig.json'
+      }),
+    ],
+    external: [
+      'http', 'fs', 'path', 'url', 'util', 'querystring',
+      'mime-types', '@hapi/accept'
+    ],
+  });
+
+  await bundle.write({
+    dir: 'build/server',
+    format: 'cjs',
+  });
+
   await bundle.close();
 }
 
