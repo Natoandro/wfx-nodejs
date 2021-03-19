@@ -11,8 +11,8 @@ async function requestHandler(
   request: http.IncomingMessage,
   response: http.ServerResponse
 ) {
-  const url = new URL(request.url, `http://${request.headers.host}`);
-  const params = url.searchParams;
+  const [path, search] = request.url.split('?');
+  const params = new URLSearchParams(search);
 
   const requestedFile = params.get('file');
 
@@ -27,7 +27,7 @@ async function requestHandler(
         sendClientFile(response, 'index.html', headers);
         return;
       case 'application/json':
-        const object = await explorer.getDirectoryContent(qs.unescape(url.pathname));
+        const object = await explorer.getDirectoryContent(qs.unescape(path));
         sendJson(response, object, headers);
         return;
       default:
