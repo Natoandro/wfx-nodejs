@@ -20,8 +20,9 @@ async function client_bundle() {
       typescript({
         tsconfig: 'client.tsconfig.json'
       }),
-      nodeResolve(),
-      commonjs(),
+      // We are currently using only 'react' and 'react-dom' from node_module
+      //nodeResolve(),
+      //commonjs(),
       replace({
         preventAssignment: true,
         values: {
@@ -29,15 +30,16 @@ async function client_bundle() {
         }
       })
     ],
-    external: {
-      'react': 'React',
-      'react-dom': 'ReactDOM'
-    }
+    external: ['react', 'react-dom']
   });
 
   await bundle.write({
     file: 'build/client/script.js',
-    format: 'iife'
+    format: 'iife',
+    globals: {
+      'react': 'React',
+      'react-dom': 'ReactDOM'
+    }
   });
 
   await bundle.close();
