@@ -24,6 +24,9 @@
   },
   "homepage": "https://github.com/Natoandro/wfx-nodejs#readme",
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-node-resolve": "^11.2.0",
+    "@rollup/plugin-replace": "^2.4.1",
     "@rollup/plugin-typescript": "^8.2.0",
     "@types/mime-types": "^2.1.0",
     "@types/node": "^14.14.35",
@@ -34,6 +37,10 @@
   },
   "dependencies": {
     "@hapi/accept": "^5.0.2",
-    "mime-types": "^2.1.29"
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
+    "mime-types": "^2.1.29",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   }
 }
