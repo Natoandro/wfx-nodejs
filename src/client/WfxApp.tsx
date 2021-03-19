@@ -48,7 +48,6 @@ export default function () {
   const path = decodeURIComponent(window.location.pathname);
 
   const [entries, setEntries] = React.useState<DirectoryEntries | null>(null);
-  console.log('entries-', entries);
 
   React.useEffect(() => {
     getEntries(path).then(setEntries);
