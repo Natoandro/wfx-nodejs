@@ -1,4 +1,5 @@
 import http from 'http';
+import qs from 'querystring';
 import { mediaType } from '@hapi/accept';
 import env from './env';
 import { sendClientFile, sendJson } from './response';
@@ -26,7 +27,7 @@ async function requestHandler(
         sendClientFile(response, 'index.html', headers);
         return;
       case 'application/json':
-        const object = await explorer.getDirectoryContent(url.pathname)
+        const object = await explorer.getDirectoryContent(qs.unescape(url.pathname));
         sendJson(response, object, headers);
         return;
       default:

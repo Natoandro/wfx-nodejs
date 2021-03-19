@@ -45,7 +45,7 @@ function Entries({ entries }: EntriesProps) {
 
 
 export default function () {
-  const path = window.location.pathname;
+  const path = decodeURIComponent(window.location.pathname);
 
   const [entries, setEntries] = React.useState<DirectoryEntries | null>(null);
   console.log('entries-', entries);
